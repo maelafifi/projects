@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+   // shape-rendering: crispEdges;
+}
+<svg width="960" height="500"></svg>
+</style>
+<link href="style.css" rel="stylesheet" type="text/css">
+<textarea></textarea>
+<body>
+
+<!-- load the d3.js library -->    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+
+<script>
+
+// Set the dimensions of the canvas / graph
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+var x = d3.scaleLinear().range([0, 330]);
+var y = d3.scaleLinear().range([height, 0]);
+  
+// Define the axes
+var xAxis = d3.axisBottom().scale(x).tickValues([0, 1, 2, 3,4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
+
+var yAxis = d3.axisLeft().scale(y);
+
+    
+// Adds the svg canvas
+var svg = d3.select("body")
+    		.append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    		.append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+  
+  d3.text("peter.txt", function(error, data) {
+
+    if (error) throw error;
+   	d3.select("body").select("textarea").text(data);
+});
+
+// Get the data
+d3.csv("dangerTimes.csv", function(error, data) {
+    data.forEach(function(d) {
+        d.Hour = d.Hour;
+        d.Incidents = +d.Incidents;
+    });
+
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.Hour; }));
+    y.domain([0, d3.max(data, function(d) { return d.Incidents; })]);
+
+    // Add the scatterplot
+    svg.selectAll("dot")
+        .data(data)
+      	.enter()
+      	.append("circle")
+        .attr("r", function(d){return d.Incidents * .025;})
+        .attr("cx", function(d) { return x(d.Hour); })
+        .attr("cy", function(d) { return y(d.Incidents); })
+    		.style("fill", function(d)
+    {
+     
+      if(d.Incidents > 800)
+        {
+          return "#67000d";
+        }
+      else if(d.Incidents > 700)
+        {
+          return "#a50f15";
+        }
+      else if(d.Incidents > 600)
+        {
+          return "#cb181d";
+        }
+      else if (d.Incidents >500)
+        {
+          return "#ef3b2c";
+        }
+      else if(d.Incidents > 400)
+        {
+          return "#fb6a4a";
+        }
+      else if(d.Incidents > 300)
+        {
+          return "#fcbba1";
+        }
+      else if(d.Incidents >200)
+        {
+          return "#fee0d2";
+        }
+      return "#fff5f0";
+    });;
+  
+  
+  
+  
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+    		.append("text")
+    	//.attr("transform", "rotate(-90)")
+      	.attr("dy", "-42.71em")
+  			.attr("dx", "40.5em")
+      	.attr("fill", "#000")
+      	.text("TIME");;
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+    		.append("text")
+    .attr("transform", "rotate(-90)")
+      	.attr("dy", "-3.71em")
+  			.attr("dx", "-15.5em")
+      	.attr("fill", "#000")
+      	.text("NUMBER OF INCIDENTS");;
+
+});
+
+</script>
+</body>

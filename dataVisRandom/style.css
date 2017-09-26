@@ -1,0 +1,15 @@
+textarea {
+  /* position the textarea on top of the svg */
+  position: fixed;
+  bottom: 22px;
+  left: 5px;
+
+  margin: 0px;
+  padding: 5px;
+
+  width: 550px;
+  height: 120px;
+
+  /* try changing this color in blockbuilder! */
+  background-color: rgba(255, 255, 255, 0.8);
+}
