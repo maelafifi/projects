@@ -1,0 +1,4 @@
+Mohamed Elafifi
+This Scatter Plot shows the number of Total police related incidents mapped to the time in which the incidents occurred in San Francisco for the month of December, 2016. The darker and larger the circles, the more incidents occurred in that hour.
+
+The least amount of calls that the Police Department received was between 5 am to 6 am. The highest amount was between 7pm to 8 pm, with 857 calls.

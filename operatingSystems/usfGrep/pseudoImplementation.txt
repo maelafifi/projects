@@ -1,0 +1,9 @@
+read command line args
+     for each file in args
+     	 open file
+	      for each line in file
+	      	  check to see if words in line match the search query
+		  	if it is
+			   output file name, line number, line
+			else
+			   return
