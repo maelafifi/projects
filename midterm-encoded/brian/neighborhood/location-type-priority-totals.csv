@@ -1,0 +1,42 @@
+location,Alarms high priority,Alarms medium-low priority,Assist Police high priority,Assist Police medium-low priority,Citizen Assist / Service Call high priority,Citizen Assist / Service Call medium-low priority,Fire high priority,Fire medium-low priority,Hazards high priority,Hazards medium-low priority,Medical Incident high priority,Medical Incident medium-low priority,Rescue high priority,Rescue medium-low priority,Vehicle-Related high priority,Vehicle-Related medium-low priority,Other high priority,Other medium-low priority
+Castro/Upper Market,24,0,0,0,3,0,31,0,7,0,134,119,1,0,8,2,14,5
+West of Twin Peaks,19,0,0,0,11,0,11,0,2,0,103,96,1,0,9,6,9,1
+Oceanview/Merced/Ingleside,12,0,0,0,3,0,13,0,6,0,60,58,0,0,4,6,4,7
+Pacific Heights,32,0,0,0,10,0,14,0,3,0,75,91,5,0,7,2,4,2
+Potrero Hill,25,0,0,0,5,0,17,0,12,0,65,84,4,0,3,4,2,0
+Lakeshore,23,0,0,0,4,0,5,0,1,0,41,65,4,0,2,7,5,1
+Sunset/Parkside,22,0,0,0,26,0,29,0,20,0,183,170,1,0,6,14,16,3
+North Beach,16,0,0,0,6,0,6,0,2,0,77,100,0,0,5,3,6,1
+Marina,28,0,0,0,7,0,22,0,5,0,69,87,4,0,7,7,3,0
+Twin Peaks,11,0,0,0,2,0,5,0,1,0,18,26,1,0,0,1,1,0
+Hayes Valley,25,0,0,0,4,0,19,0,4,0,103,115,0,0,7,7,3,2
+South of Market,84,0,0,0,23,0,55,0,5,0,523,587,3,0,25,14,15,20
+Mission,78,0,1,0,13,1,84,1,15,0,371,525,7,0,20,13,18,15
+Excelsior,5,0,0,0,17,0,11,0,2,0,92,112,0,0,5,3,6,4
+Presidio,7,0,0,0,1,0,1,0,1,0,11,7,4,0,5,4,3,0
+Financial District/South Beach,139,0,0,0,10,0,65,1,4,0,292,326,20,0,24,13,11,13
+Nob Hill,47,0,1,0,4,0,18,0,9,0,151,168,5,0,6,3,10,1
+Bernal Heights,9,0,0,0,8,1,18,0,8,0,69,75,1,0,9,8,8,4
+Seacliff,3,0,0,0,1,0,2,0,0,0,3,3,1,0,0,0,0,0
+Lincoln Park,0,0,0,0,0,0,1,0,0,0,5,7,0,0,0,0,1,0
+Presidio Heights,12,0,0,0,4,0,3,0,3,0,28,39,0,0,2,2,4,1
+Chinatown,46,0,0,0,0,0,15,0,3,0,92,107,1,0,6,1,3,2
+Inner Sunset,13,0,0,0,2,0,8,0,7,0,56,56,0,0,5,2,1,3
+Portola,2,0,0,0,5,0,7,0,3,0,48,31,0,0,8,2,1,1
+Lone Mountain/USF,19,0,0,0,4,0,5,0,0,0,46,52,0,0,1,1,4,1
+Japantown,8,0,0,0,3,0,4,0,2,0,37,39,0,0,3,0,3,0
+Outer Mission,7,0,0,0,4,0,10,0,5,0,55,75,2,0,5,8,2,1
+Inner Richmond,15,0,0,0,7,0,6,0,3,0,56,64,1,0,4,4,5,1
+Tenderloin,107,0,0,0,21,0,59,0,5,0,718,826,15,0,9,8,11,28
+Outer Richmond,34,0,0,0,12,0,12,0,9,0,95,107,0,0,4,4,5,2
+Noe Valley,14,0,0,0,3,0,12,0,9,0,36,34,0,0,3,4,5,2
+Treasure Island,5,0,0,0,1,0,0,0,0,1,11,12,0,0,4,2,2,0
+Bayview Hunters Point,38,0,0,0,13,0,48,1,14,0,219,221,1,0,19,10,11,7
+McLaren Park,6,0,0,0,0,0,2,0,0,0,4,6,0,0,1,0,3,0
+Golden Gate Park,1,0,0,0,3,0,7,0,2,0,19,20,0,0,2,7,4,0
+Visitacion Valley,7,0,0,0,1,0,15,0,2,0,63,56,1,0,2,2,3,5
+Haight Ashbury,16,0,0,0,3,0,19,0,2,0,69,85,0,0,5,2,4,0
+Glen Park,6,0,0,0,5,0,0,0,0,0,18,18,0,0,1,0,3,2
+Russian Hill,27,0,0,0,5,0,20,0,6,0,46,60,2,0,8,1,8,1
+Western Addition,43,0,0,0,13,0,15,0,3,0,158,167,1,0,4,4,5,3
+Mission Bay,22,0,0,0,2,0,21,0,0,0,69,59,3,0,5,4,1,5

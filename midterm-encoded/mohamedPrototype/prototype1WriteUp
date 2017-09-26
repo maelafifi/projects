@@ -1,0 +1,6 @@
+This is a basic bubble plot chart with the x-axis equal to the time of day and the y-axis maps to the number of calls recieved.
+The Number of Calls received were for fire department calls throughout the month of December, 2016.
+
+There are two methods of embedded information in this graph, which both point to the same data: 
+1) The darker the red, the more incidents that were called in for the month of December and that particular time. 
+2) The larger the circle, the more incidents that were called in for the month of December and that particular time.

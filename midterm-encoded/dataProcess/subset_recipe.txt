@@ -1,0 +1,23 @@
+splitrows col: column1 on: '\n' quote: '\"'
+split col: column1 on: ',' limit: 33 quote: '\"'
+replace col: * with: '' on: '\"' global: true
+header
+drop col: Unit_ID, Incident_Number, Battalion, Box, Number_of_Alarms, Fire_Prevention_District, Location, Supervisor_District, Unit_sequence_in_call_dispatch, Station_Area, Address, Hospital_DtTm, Transport_DtTm, Entry_DtTm, Received_DtTm, Watch_Date, Available_DtTm, ALS_Unit, Unit_Type, RowID
+derive value: dateformat(Dispatch_DtTm, 'EEE') group: Dispatch_DtTm as: 'weekday_dispatch'
+derive value: dateformat(Dispatch_DtTm, 'HH') group: Dispatch_DtTm as: 'hour_dispatch'
+derive value: weekday(Dispatch_DtTm) group: weekday_dispatch as: 'weekday_num'
+derive value: dateformat(Dispatch_DtTm, 'd') group: Dispatch_DtTm as: 'day'
+rename col: day to: 'dispatch_day'
+rename col: weekday_num to: 'weekday_dispatch_num'
+derive value: if(matches([Call_Type_Group], 'Potentially Life-Threatening'), 1, if(matches([Call_Type_Group], 'Non Life-threatening'), 2, if(matches([Call_Type_Group], 'Alarm'), 3, if(matches([Call_Type_Group], 'Fire'), 4, false)))) group: Call_Type_Group as: 'call_type_group_num'
+delete row: ismissing([Call_Type_Group])
+sort order: Priority
+delete row: ismismatched(Priority, ['Integer'])
+delete row: ismissing([Zipcode_of_Incident])
+delete row: ismissing([Call_Type_Group])
+delete row: ismissing([Response_DtTm])
+delete row: ismissing([City])
+delete row: ismissing([On_Scene_DtTm])
+derive value: datedif(Dispatch_DtTm, On_Scene_DtTm, minute) as: 'total_response'
+sort order: total_response
+delete row: total_response < 1

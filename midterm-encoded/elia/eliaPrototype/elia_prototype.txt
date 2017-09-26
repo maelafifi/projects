@@ -1,0 +1,2 @@
+This bubble chart displays the count of occurences for the San Francisco Fire Department in December 2016.
+Each bubble's size is directly related to the number of occurences per call type. The different colors resemble different call types.

@@ -1,0 +1,5 @@
+Data for the San Francisco Fire department was published by the City and County of San Francisco and found on SF OpenData. Our team used a spreadsheet software called Trifacta Wrangler
+to create a subset of the data we would use on our visualizations. Our subset includes call date, dispatch time, call type, original priority, and neighborhood district, resulting
+in a dataset that is 22,147 rows by 18 columns. In order to make the data as consistent as possible, our prototypes only consider unique call numbers due
+to the fact that each call can result in the dispatching of multiple units. Missing and mismatched data is removed from our dataset. In order to reproduce our subset, feel free to download our
+Trifacta script below. 

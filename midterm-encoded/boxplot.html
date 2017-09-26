@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/png" href="img/fav.png"/>
+    <title>Midterm Project - Boxplot</title>
+
+    <!-- Theme/Plugin CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/creative.min.css" type="text/css">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+
+  </head>
+  <body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">En:coded Visualizations</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-left">
+                <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Explore
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="bubble.html">Incident Type</a></li>
+                    <li><a href="boxplot.html">Response Times</a></li>
+                    <li><a href="bubblehour.html">Call Times</a></li>
+                    <li><a href="radialday.html">Call Days</a></li>
+                    <li><a href="neighborhood.html">Neighborhood Priorities</a></li>
+                </ul>
+              </li>
+              </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a class="page-scroll" href="#version1">D3</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#prototype">Prototype</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#footer">More</a>
+                  </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>Response Times by Call Type</h1>
+            </div>
+            <hr>
+            <p class="text-center" style= "color:white">This boxplot visualizes average response time in minutes across multiple incident types.</p>
+            <a href="#version1" class="page-scroll btn btn-default btn-xl sr-button">Learn More</a>
+        </div>
+    </header>
+
+
+    <div class="jumbotron text-center" id="about">
+      <h1>SFFD Average Response Times by Call Type in Dec 2016</h1>
+    </div>
+
+    <section class="no-padding content" id = "version1">
+    <style>
+/*
+    body {
+      font-family: "Avenir"
+    }*/
+
+    .box {
+      font: 1px "Avenir";
+    }
+
+    .box line,
+    .box rect {
+      fill: #faa098;
+      stroke: #000000;
+      stroke-width: 1.2px;
+    }
+
+    /*   .box circle {
+        fill: blue;
+        stroke: #000000;
+        stroke-width:  0.5px;
+      } */
+
+    .box .center {
+      stroke-dasharray: 2,3;
+    }
+
+    .box .outlier {
+      fill: #fdc371;
+      stroke: #000000;
+      stroke-width:  0.5px;
+    }
+
+    .axis {
+      font: 12px "Avenir";
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    </style>
+      <script src="https://d3js.org/d3.v3.min.js"></script>
+      <script src ="elia/boxplot/box.js"></script>
+      <script src ="elia/boxplot/boxplot.js"></script>
+
+    </section>
+
+        <section class="no-padding content">
+
+        <p> This boxplot provides us with lots of information regarding the time it takes for the SFFD to respond to various incident types. Each incident is grouped into one of the eight
+          call categories. Box-and-whisker plots prove useful in allowing the viewer to observe the distribution of each response per call. Each box has a lower and upper whisker, providing
+          the minimum and maximum. The line outlining the bottom of each box is the first quartile, Q1. The line following that is our median, splitting the data evenly in half and depicts the second quartile, Q2.
+          The line outlining the top of the box is the third quartile, Q3. Note that the plot divides the data into 4 equal parts. The bottom whisker represents the bottom 25% of the data, the bottom half of the box represents the second 25%,
+           the upper half of the box represents the third 25% , and the top whisker represents the top 25%. Each yellow dot above or below the graph represents an outlier, defined to be Q1 - (1.5 * interquartile range)
+           or Q3 + (1.5 * interquartile range) where the interquartile range is defined to be Q3 - Q1. This is the pink box we see enclosing the 3 quartiles.
+        </p>
+
+        <p> Enough explaining box plots! The meat of this visualization is in seeing where the SFFD responds the fastest and slowest. Response time is defined by the difference in time between when the call was first dispatched and when SFFD units were on-scene. The fastest response time, on average, seems to be around 4 minutes for alarm incidents. Coming very close to that
+         are fire incidents, at around 4.2 minutes average response. That's pretty good in comparison to a whopping 7.5 minutes for the average medical response. Almost double the time, we would assume on the contrary that medical incidents would be responded to
+         at faster rates. Also note the variance in the interquartile range! There's a pretty wide range of response time for rescue calls in comparison to the much smaller variation in alarm or fire calls. We can therefore be confident within this month that such calls would be responded to, on average, faster than most calls! This can lead us to naturally wonder if our data can be generalized to all months or only specific to December.
+
+         It would also prove useful to also know the details of calls pertaining 'Other' and 'Alarms' in order to better interpret the visualization.
+        </p>
+      </section>
+
+      <section id="prototype">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 text-center">
+                      <h1 class="section-heading" style = "font-family: avenir;">Prototype</h1>
+                      <hr class="primary">
+                      <br>
+                      <br>
+                      </div>
+                      <img src="elia/boxplot/prototype.png" style="width:960px;height:600px; margin-left:100px" align="middle">
+
+              </div>
+          </div>
+      </section>
+
+  <div class="jumbotron text-center" id="footer" style = "background:white ">
+        <h2>Explore More Visualizations</h2>
+      </div>
+      <section class="no-padding" id="portfolio" >
+        <div class="container-fluid">
+            <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="bubble.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/elia_prototype.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Incident Type
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="boxplot.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/box.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Response Time
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="radialday.html" class="portfolio-box">
+                      <img src="mohamedPrototype/prototype2.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Day of Week
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+        </div>
+        <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4 col-lg-offset-2 col-sm-offset-2">
+                  <a href="bubblehour.html" class="portfolio-box">
+                      <!-- <img src="mohamedPrototype/MohamedPrototype1.jpg" class="img-responsive" alt=""> -->
+                      <img src="mohamedPrototype/MohamedPrototype1.jpg"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Time of Day
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="neighborhood.html" class="portfolio-box">
+                      <img src="brian/proto1.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Neighborhood Priority
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+          </div>
+        </div>
+
+    </section>
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrollreveal.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+  </body>
+</html>

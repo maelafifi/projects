@@ -1,0 +1,64 @@
+/* content */
+section {
+	padding: 0;
+}
+
+section.content {
+	width:80%;
+	margin: 65px auto;
+}
+
+section.content p {
+	font-size: 20px;
+	text-indent: 40px;
+}
+
+/* bios */
+div.bio-pics {
+	margin: 0 auto;
+	text-align: center;
+}
+
+div.bio-pics>img {
+	width:200px;
+	height:200px;
+	margin: 0 15px;
+	cursor: pointer;
+}
+
+div.bio-pics>img.active {
+	border: 5px solid #f05f40;
+}
+
+div.bio-content {
+	margin:55px auto;
+	width:80%;
+}
+
+div.bio-content>div:not(.active) {
+	display: none;
+}
+
+div.bio-content h3 {
+	text-align: center;
+}
+
+/* custom classes */
+.image-full {
+	display: block;
+	margin: 0 auto;
+	padding-bottom: 40px;
+}
+
+figure.fixedratio {
+  background-size: cover;
+  -moz-background-size: cover;  /* Firefox 3.6 */
+  background-position: center;  /* Internet Explorer 7/8 */
+}
+
+iframe.center {
+	border:0;
+	width:100%;
+	margin:0 auto;
+	display: block;
+}

@@ -1,0 +1,94 @@
+import csv
+from datetime import datetime, date
+import calendar
+from collections import OrderedDict
+	
+filename = 'firedept_calls_dec2016.csv'
+
+calltypes = {}
+keys = ['neighborhood']
+callNums = []
+data = {}
+
+{}
+
+types = OrderedDict()
+types['Alarms'] = []
+types['Assist Police'] = []
+types['Citizen Assist / Service Call'] = []
+types['Fire'] = ['Explosion', 'Outside Fire', 'Smoke Investigation (Outside)', 'Structure Fire']
+types['Hazards'] = ['Electrical Hazard', 'Gas Leak (Natural and LP Gases)', 'HazMat', 'Odor (Strange / Unknown)']
+types['Medical Incident'] = []
+types['Rescue'] = ['Elevator / Escalator Rescue', 'Extrication / Entrapped (Machinery, Vehicle)', 'Water Rescue']
+types['Vehicle-Related'] = ['Aircraft Emergency', 'Fuel Spill', 'Traffic Collision', 'Vehicle Fire']
+types['Other'] = []
+
+with open(filename) as file:
+	reader = csv.reader(file)
+	firstLine = True
+	for row in reader:
+		if firstLine:
+			firstLine = False
+			continue
+
+		callnum = row[0]
+		calltype = row[1]
+		pri = row[13]
+		locat = row[17]
+
+		if callnum not in callNums and locat != 'None':
+
+			callNums.append(callnum)	  		
+
+			if locat not in data.keys():
+				data[locat] = OrderedDict()
+
+				for typeName in types:
+					data[locat][typeName] = {}
+					data[locat][typeName]["other"] = 0
+					data[locat][typeName]["high"] = 0
+
+			if calltype in types.keys():
+
+				if pri == "3":
+					data[locat][calltype]["high"] += 1
+				else:
+					data[locat][calltype]["other"] += 1
+
+			else:
+				for key in types.keys():
+					if calltype in types[key]:
+
+						if pri == "3":
+							data[locat][key]["high"] += 1
+						else:
+							data[locat][key]["other"] += 1	
+						break
+
+
+## MAKE CATEGORY TOTALS
+output1 = 'location-type-priority-totals.csv'
+
+with open(output1, mode='w') as outfile:
+	writer = csv.writer(outfile)
+
+	## headers
+	headers = ['location']
+
+	for locat, values in data.items():
+		for typeName in values.keys():
+			# firstWord = typeName.split(' ', 1)[0].lower()
+			headers.append(typeName + " high priority")
+			headers.append(typeName + " medium-low priority")
+		break
+
+	writer.writerow(headers)
+
+	for locat, values in data.items():
+		row = [locat]
+
+		for typeName, val in values.items():
+			row.append(val["high"])
+			row.append(val["other"])
+
+		writer.writerow(row)

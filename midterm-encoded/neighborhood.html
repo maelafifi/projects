@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/png" href="img/fav.png"/>
+    <title>Midterm Project - Neighborhood Priorities</title>
+
+    <!-- Theme/Plugin CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/creative.min.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+
+  </head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">En:coded Visualizations</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Explore
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="bubble.html">Incident Type</a></li>
+                    <li><a href="boxplot.html">Response Times</a></li>
+                    <li><a href="bubblehour.html">Call Times</a></li>
+                    <li><a href="radialday.html">Call Days</a></li>
+                    <li><a href="neighborhood.html">Neighborhood Priorities</a></li>
+                  </ul>
+                </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a class="page-scroll" href="#vis">Visualization</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#data">Data</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#proto">Prototype</a>
+                  </li>
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>Neighborhood Priorities</h1>
+                <hr>
+                <p style="color:white">Visualizing incident totals by neighborhood, type, and priority.</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="jumbotron text-center">
+      <h1>What type and where are the majority of high-priority calls?</h1>
+    </div>
+
+    <section class="content" id="vis">
+      <div class="text-center" style="margin-bottom:65px;">
+        <a href="brian/neighborhood/index.html" class="btn btn-primary btn-xl">Full-Screen Visualization</a>
+      </div>
+      <iframe src="brian/neighborhood/index.html" class="center" scrolling="no" height="700"></iframe>
+
+      <p>When loading the visualization, with all call-types selected, we can see a fairly even split between high-priority incidents and medium-low priority incidents. This means that roughly half of the calls the SFFD receives are potentially life-threatening while the other half are not. This seems pretty intuitive. Also, as we can see, it seems like the neighborhoods with the most traffic/popularity such as Tenderloin, South of Market, and Mission are the largest contributors. This also seems fairly intuitive.</p>
+
+      <p>In addition, clicking through each type, it becomes clear that Medical Incidents have the majority of medium/low priority incidents. This, essentially groups all of the other incident types into these high-priority events.</p>
+
+      <p>So, if we remove the Medical Incidents, we can see that the rest of the incident types have significantly more high-priority incidents. This is a interesting observation because it means that, disregarding medical incidents, the SFFD responds primarily to high-priorty incidents. This conflicts with the first conclusion we made!</p>
+
+      <p>Now, let’s just look at the Hazards incident type. Something interesting happens here. Now looking at the incident grouping, these Hazards mostly relate to housing/electrical/structural issues. Suddenly, the Financial District and South of Market moves down significantly and places like Outer Richmond raise in their place. My hypothesis for this is that these must be the older parts of the city where old gas/electrical lines are going bad whereas newer parts of the city such as the Financial District have very few incidents in comparison.</p>
+
+      <p>In conclusion, though my main question seems to be answered with; more popular parts of the city seem to have more high-priority incidents, there are plenty of other interesting trends that can be pointed out using this visualization technique using neighborhood and type.</p>
+
+    </section>
+
+    <div class="text-center" id="data">
+      <h1>Deriving the Data</h1>
+      <hr/>
+    </div>
+
+    <section class="content">
+      <div class="text-center" style="margin-bottom:65px;">
+        <a href="brian/neighborhood/makeData.py.txt" class="btn btn-primary btn-xl">View Python Script</a>
+      </div>
+      <p>For this subset of the data, I used our teams original December SFFD Calls data, I wanted to include only unique incidents as opposed to including every vehicle dispatched to an incident. So, for each row in the dataset, before processing it, I made sure that it was it was the first appearance of that call number. If the call number was already processed, it will ignore the row. This effectively only processes the first row of every call number, representing the first vehicle dispatched to the scene of the call.</p>
+
+      <p>For my specific visualization, I wanted to look at the neighborhoods that were receiving calls and the priority of the calls being received in these neighborhoods. Additionally, I wanted to include types as a measure. I used the following grouping for the incident types (same as Incident Type visualization);
+      </p>
+
+      <ul style="list-style-type: none;">
+        <li>Alarms</li>
+        <li>Assist Police</li>
+        <li>Citizen Assist / Service Call</li>
+        <li>Fire
+          <ul>
+            <li>Explosion</li>
+            <li>Outside Fire</li>
+            <li>Smoke Investigation (Outside)</li>
+            <li>Structure Fire</li>
+          </ul>
+        </li>
+        <li>Hazards
+          <ul>
+            <li>Electrical Hazard</li>
+            <li>Gas Leak (Natural and LP Gases)</li>
+            <li>HazMat</li>
+            <li>Odor (Strange / Unknown)</li>
+          </ul>
+        </li>
+        <li>Medical Incident</li>
+        <li>Rescue
+          <ul>
+            <li>Elevator / Escalator Rescue</li>
+            <li>Extrication / Entrapped (Machinery, Vehicle)</li>
+            <li>Water Rescue</li>
+          </ul>
+        </li>
+        <li>Vehicle-Related
+          <ul>
+            <li>Aircraft Emergency</li>
+            <li>Fuel Spill</li>
+            <li>Traffic Collision</li>
+            <li>Vehicle Fire</li>
+          </ul>
+        </li>
+      </ul>
+
+      <p>For my call priorities, in the original dataset the values ranged from 1 to 3 (1 being low priority and 3 being high priority), but I wanted to focus more on the high priorities so I grouped medium and low priorities together. So, my dataset has two columns for each incident type; a high priority and medium/low priority.</p>
+
+    </section>
+
+    <div class="text-center" id="proto">
+      <h1>Prototype</h1>
+      <hr/>
+    </div>
+
+    <section class="content">
+      <div class="image-full" style="/* width */ max-width: 1000px">
+        <figure class="fixedratio" style="background-image: url('brian/proto1.png'); /* height/width */ padding-top: 64%;"></figure>
+      </div>
+    </section>
+
+    <div class="text-center" style="margin-bottom:55px;">
+      <h2>Explore More Visualizations</h2>
+    </div>
+    <section class="no-padding" id="portfolio" >
+        <div class="container-fluid">
+            <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="bubble.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/elia_prototype.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Incident Type
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="boxplot.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/box.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Response Time
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="radialday.html" class="portfolio-box">
+                      <img src="mohamedPrototype/prototype2.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Day of Week
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+        </div>
+        <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4 col-lg-offset-2 col-sm-offset-2">
+                  <a href="bubblehour.html" class="portfolio-box">
+                      <!-- <img src="mohamedPrototype/MohamedPrototype1.jpg" class="img-responsive" alt=""> -->
+                      <img src="mohamedPrototype/MohamedPrototype1.jpg"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Time of Day
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="neighborhood.html" class="portfolio-box">
+                      <img src="brian/proto1.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Neighborhood Priority
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+          </div>
+        </div>
+
+    </section>
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrollreveal.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+    <!-- My JavaScript -->
+    <script type="text/javascript" src="js/bios.js"></script>
+
+  </body>
+</html>

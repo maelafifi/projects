@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body { font: 20px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+   // shape-rendering: crispEdges;
+}
+<svg width="960" height="500"></svg>
+</style>
+<link href="style.css" rel="stylesheet" type="text/css">
+<body>
+ 
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<script>
+
+var margin = {top: 55, right: 20, bottom: 50, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+var x = d3.scaleLinear().range([0, 960]);
+var y = d3.scaleLinear().range([height, 0]);
+  var i = 0;
+  var z = 0;
+var xAxis = d3.axisBottom().scale(x)
+.tickFormat(function(d){
+  if(i < 12)
+  {
+    if(z == 0 && i == 0)
+      {
+        var x = 12 + " am";
+        z++;
+      }
+    else
+    {
+    	var x = i + " am";
+    }
+  }
+  else
+  {
+    if(z > 0 && i === 12)
+      {
+        var x = 12 + " pm";
+        z++;
+      }
+    else
+    {
+      var x = i%12 + " pm";
+    }
+  }
+      i+=2;
+      return x});
+var yAxis = d3.axisLeft().scale(y);
+
+var svg = d3.select("body")
+    		.append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    		.append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+	
+d3.csv("dangerTimes.csv", function(error, data) {
+    data.forEach(function(d) {
+        d.Hour = d.Hour;
+        d.Incidents = +d.Incidents;
+    });
+
+    x.domain([-1,25]);
+    y.domain([0, d3.max(data, function(d) { return d.Incidents; })]);
+  
+	var dots = svg.selectAll("dot")
+        .data(data)
+      	.enter()
+      	.append("circle")
+        .attr("r", function(d){return (Math.sqrt(d.Incidents *1.5/Math.PI))})
+        .attr("cx", function(d) { return x(d.Hour); })
+        .attr("cy", function(d) { return y(d.Incidents); })
+    		.style("fill", function(d)
+               
+    {
+     
+      if(d.Incidents > 675)
+        {
+          return "#67000d";
+        }
+      else if(d.Incidents > 600)
+        {
+          return "#a50f15";
+        }
+      else if(d.Incidents > 525)
+        {
+          return "#cb181d";
+        }
+      else if (d.Incidents >450)
+        {
+          return "#ef3b2c";
+        }
+      else if(d.Incidents > 375)
+        {
+          return "#fb6a4a";
+        }
+      else if(d.Incidents > 300)
+        {
+          return "#fcbba1";
+        }
+      else if(d.Incidents >281)
+        {
+          return "#fee0d2";
+        }
+      return "#fff5f0";
+    });;
+	
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+    		.append("text")
+      	.attr("dy", "3.71em")
+  			.attr("dx", "40.5em")
+      	.attr("fill", "#000")
+      	.text("TIME");;
+  
+  			svg.append("g")
+        .attr("class", "x axis")
+        .append("text")
+      	.attr("dy", "-27")
+  			.attr("dx", "11.5em")
+      	.attr("fill", "#000")
+      	.text("What is the busiest hour for the fire department?");;
+  
+  			svg.append("g")
+        .attr("class", "x axis")
+        .append("text")
+      	.attr("dy", ".35em")
+  			.attr("dx", "16.8em")
+      	.attr("fill", "#000")
+      	.text("696 calls-");;
+    		
+  			svg.append("g")
+        .attr("class", "x axis")
+        .append("text")
+      	.attr("dy", "18.1em")
+  			.attr("dx", "43em")
+      	.attr("fill", "#000")
+      	.text("696");;
+
+  			svg.append("g")
+        .attr("class", "x axis")
+        .append("text")
+      	.attr("dy", "18.1em")
+  			.attr("dx", "29.9em")
+      	.attr("fill", "#000")
+      	.text("281");;
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+    		.append("text")
+    .attr("transform", "rotate(-90)")
+      	.attr("dy", "-3.71em")
+  			.attr("dx", "-15.5em")
+      	.attr("fill", "#000")
+      	.text("NUMBER OF INCIDENTS");;
+  
+  var defs = svg.append("defs");
+
+var linearGradient = defs.append("linearGradient")
+    .attr("id", "linear-gradient");
+  linearGradient.append("stop") 
+    .attr("offset", "0%")   
+    .attr("stop-color", "#ffa474");
+
+linearGradient.append("stop") 
+    .attr("offset", "100%")   
+    .attr("stop-color", "#8b0000");
+  
+  svg.append("rect")
+  .attr("x", width/2+150)
+	.attr("y", 325)
+	.attr("width", 300)
+	.attr("height", 20)
+	.style("fill", "url(#linear-gradient)");
+  
+  
+
+});
+
+</script>
+</body>

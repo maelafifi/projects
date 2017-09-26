@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!-- Credit to Brice Pierre for the idea behind this code -->
+<meta charset="utf-8">
+<style>
+body {
+  font: 14px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 960,
+    height = 500,
+    barHeight = height / 2 - 40;
+
+var formatNumber = d3.format("s");
+
+var color = d3.scale.ordinal()
+    .range(["#e31a1c","#b10026","#fc4e2a","#fd8d3c","#fed976","#feb24c","#ffffb2"]);
+
+var svg = d3.select('body').append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width/2 + "," + height/2 + ")");
+
+d3.csv("dayCount.csv", function(error, data) {
+
+  var extent = [0,2100];
+  var barScale = d3.scale.linear()
+      .domain(extent)
+      .range([0, barHeight]);
+
+  var keys = data.map(function(d,i) { return d.Day; });
+  var numBars = keys.length;
+
+  var x = d3.scale.linear()
+      .domain(extent)
+      .range([0, -barHeight]);
+	var i = 0;
+  var xAxis = d3.svg.axis()
+      .scale(x).orient("right")
+      .ticks(6)
+      .tickFormat(function(d){var x = i + " calls";
+                              i+=500;
+                              return x});
+    
+    
+    
+  var circles = svg.selectAll("circle")
+          .data(x.ticks(5))
+        .enter().append("circle")
+          .attr("r", function(d) {return barScale(d);})
+          .style("fill", "none")
+          .style("stroke", "black")
+          .style("stroke-dasharray", "2,2")
+          .style("stroke-width",".5px");
+
+  var arc = d3.svg.arc()
+      .startAngle(function(d,i) { return (i * 2 * Math.PI) / numBars; })
+      .endAngle(function(d,i) { return ((i + 1) * 2 * Math.PI) / numBars; })
+      .innerRadius(0);
+  
+  var segments = svg.selectAll("path")
+          .data(data)
+        .enter().append("path")
+          .each(function(d) { d.outerRadius = 0; })
+          .style("fill", function (d) { return color(d.Day); })
+          .attr("d", arc);
+
+  segments.transition().ease("elastic").duration(1000).delay(function(d,i) {return (25-i)*100;})
+          .attrTween("d", function(d,index) {
+            var i = d3.interpolate(d.outerRadius, barScale(+d.CallCount));
+            return function(t) { d.outerRadius = i(t); return arc(d,index); };
+          });
+
+  svg.append("circle")
+      .attr("r", barHeight)
+      .classed("outer", true)
+      .style("fill", "none")
+      .style("stroke", "black")
+      .style("stroke-width","1.5px");
+
+  var lines = svg.selectAll("line")
+      .data(keys)
+    .enter().append("line")
+      .attr("y2", -barHeight - 20)
+      .style("stroke", "black")
+      .style("stroke-width",".5px")
+      .attr("transform", function(d, i) { return "rotate(" + (i * 360 / numBars) + ")"; });
+
+  svg.append("g")
+    .attr("class", "x axis")
+    .call(xAxis);
+
+  var labelRadius = barHeight * 1.025;
+
+  var labels = svg.append("g")
+      .classed("labels", true);
+
+  labels.append("def")
+        .append("path")
+        .attr("id", "label-path")
+        .attr("d", "m0 " + -labelRadius + " a" + labelRadius + " " + labelRadius + " 0 1,1 -0.01 0");
+
+  labels.selectAll("text")
+        .data(keys)
+      .enter().append("text")
+        .style("text-anchor", "middle")
+        .style("font-weight","bold")
+        .style("fill", function(d, i) {return "#3e3e3e";})
+        .append("textPath")
+        .attr("xlink:href", "#label-path")
+        .attr("startOffset", function(d, i) {return i * 100 / numBars + 50 / numBars + '%';})
+        .text(function(d) {return d.toUpperCase(); });
+  
+  var defs = svg.append("defs");
+	
+	var linearGradient = defs.append("linearGradient")
+    .attr("id", "linear-gradient");
+  linearGradient.append("stop") 
+    .attr("offset", "0%")   
+    .attr("stop-color", "#ffffb2")
+
+linearGradient.append("stop") 
+    .attr("offset", "17%")   
+    .attr("stop-color", "#fed976");
+  linearGradient.append("stop") 
+    .attr("offset", "34%")   
+    .attr("stop-color", "#feb24c");
+  linearGradient.append("stop") 
+    .attr("offset", "51%")   
+    .attr("stop-color", "#fd8d3c");
+  linearGradient.append("stop") 
+    .attr("offset", "69%")   
+    .attr("stop-color", "#fc4e2a");
+  linearGradient.append("stop") 
+    .attr("offset", "84%")   
+    .attr("stop-color", "#e31a1c");
+  linearGradient.append("stop") 
+    .attr("offset", "100%")   
+    .attr("stop-color", "#b10026");
+  
+  svg.append("rect")
+  .attr("x", -width+500)
+	.attr("y", 175)
+	.attr("width", 300)
+	.attr("height", 20)
+	.style("fill", "url(#linear-gradient)");
+  
+  svg.append("rect")
+  .attr("x", -width+500)
+	.attr("y", 175)
+	.attr("width", 300)
+	.attr("height", 20)
+	.style("fill", "url(#linear)");
+  
+  svg.append("g")
+        .attr("class", "x axis")
+        .append("text")
+      	.attr("dy", "13.5em")
+  			.attr("dx", "-14em")
+      	.attr("fill", "#000")
+      	.text("2015");;
+
+  			svg.append("g")
+        .attr("class", "x axis")
+        .append("text")
+      	.attr("dy", "13.5em")
+  			.attr("dx", "-32.2em")
+      	.attr("fill", "#000")
+      	.text("1357");;
+  
+  svg.append("g")
+        .attr("class", "x axis")
+        .append("text")
+      	.attr("dy", "-200")
+  			.attr("dx", "-32.5em")
+      	.attr("fill", "#000")
+      	.text("What is the busiest day for the fire department?");;
+
+});
+	
+</script>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/png" href="img/fav.png"/>
+    <title>Midterm Project - Homepage</title>
+
+    <!-- Theme/Plugin CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/creative.min.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+
+  </head>
+
+<body id="page-top">
+  	<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">En:coded Visualizations</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Explore
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="bubble.html">Incident Type</a></li>
+                    <li><a href="boxplot.html">Response Times</a></li>
+                    <li><a href="bubblehour.html">Call Times</a></li>
+                    <li><a href="radialday.html">Call Days</a></li>
+                    <li><a href="neighborhood.html">Neighborhood Priorities</a></li>
+                  </ul>
+                </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a class="page-scroll" href="#about">About</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#data">Visualizations</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#team">The Team</a>
+                  </li>
+
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>SFFD Data Visualizations</h1>
+                <hr>
+                <p style= "color:white"> Our team visualizes San Francisco Fire Department Calls in December 2016 using Tableau and the D3.js library.  </p>
+            </div>
+            <a href="#about" class="page-scroll btn btn-default btn-xl sr-button">Learn More</a>
+        </div>
+    </header>
+
+
+    <div class="jumbotron text-center" id="about">
+      <h1>Data &amp Processing</h1>
+    </div>
+
+    <section class="no-padding content">
+      <p>Data for the San Francisco Fire department was published by the City and County of San Francisco and found on <a href="https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service-December-2016/97i8-upbq?category=Public-Safety&view_name=Fire-Department-Calls-for-Service-December-2016">SF OpenData</a>.
+      Our team used a spreadsheet software called <a href="https://www.trifacta.com/">Trifacta Wrangler</a> to create a subset of the data we would use on our visualizations. Our subset includes call date, dispatch time, call type, call priority, and neighborhood district, resulting
+      in a dataset that is 17,533 rows by 20 columns. Further details on each column can be found <a href ="descript.html">here</a>. In order to make the data as consistent as possible, our prototypes only consider unique call numbers due
+      to the fact that each call can result in the dispatching of multiple units. Missing and mismatched data is removed from our dataset. We provide a list of columns with their data type and description. In order to reproduce our subset, we also provide the option to download our
+      Trifacta script below.  </p>
+
+
+
+      <div class="text-center">
+        <a href="dataProcess/subset_recipe.txt" download class="btn btn-primary btn-xl">Download Script</a>
+      </div>
+    </section>
+
+
+    <div class="jumbotron text-center" id="data">
+      <h1>Visualizations</h1>
+    </div>
+
+    <section class="no-padding" id="portfolio" >
+        <div class="container-fluid">
+            <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="bubble.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/elia_prototype.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Incident Type
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="boxplot.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/box.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Response Time
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="radialday.html" class="portfolio-box">
+                      <img src="mohamedPrototype/prototype2.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Day of Week
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+        </div>
+        <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4 col-lg-offset-2 col-sm-offset-2">
+                  <a href="bubblehour.html" class="portfolio-box">
+                      <!-- <img src="mohamedPrototype/MohamedPrototype1.jpg" class="img-responsive" alt=""> -->
+                      <img src="mohamedPrototype/MohamedPrototype1.jpg"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Time of Day
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="neighborhood.html" class="portfolio-box">
+                      <img src="brian/proto1.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Neighborhood Priority
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+          </div>
+        </div>
+
+    </section>
+
+    <div class="jumbotron text-center" id="team">
+      <h1>The Team</h1>
+    </div>
+    <section class="no-padding content">
+      <div class="bio-pics">
+          <img class="img-circle active" src="brian/bio.jpg" data="brian">
+          <img class="img-circle" src="elia/eliaPrototype/elia_pic.jpg" data="elia">
+          <img class="img-circle" src="mohamedPrototype/selfie.jpeg" data="mohamed">
+      </div>
+      <div class="bio-content">
+          <div data="brian" class="active">
+              <h3>Brian</h3>
+              <p>
+                Hello! My name is Brian and I am a sophmore studying Computer Science at the University of San Francisco, expecting to graduate in 2019.
+               I have some experience with front-end devlopment and I am an aspiring software engineer who loves to surf!
+              </p>
+          </div>
+          <div data="elia">
+              <h3>Elia</h3>
+              <p>
+                My name is Anaelia Ovalle, or Elia for short, and I am a senior data science student at the University of
+               San Francisco located in the Bay Area graduating this may. I moved to the United States from the Dominican Republic 4 years ago
+                and aspire to be an applied data scientist. In that light, working with D3 and Tableau is a cool way to
+                understand data and visualize it in an equally intuitive and aesthetically pleasing manner.
+
+                Responsibilities for this project have included data pre-processing, 2 visualizations implemented in Tableau and d3 (using versions 3 and 4) and website development.
+              </p>
+              <p> Interested in getting in touch? Feel free to <a href="mailto:anaeliaovalle@gmail.com">email me</a>.
+
+
+              <div class="row">
+                    <div class="col-lg-4  col-lg-offset-4 text-center">
+                        <br>
+                      <a href="https://www.linkedin.com/in/anaeliaovalle" target="_blank">
+                        <img src = "linkedin-icon.svg" style = "width:40px; height:40px;">
+                      </a>
+                          <!-- <p><a href="mailto:anaeliaovalle@gmail.com">anaeliaovalle@gmail.com</a></p> -->
+                    </div>
+
+              </div>
+          </div>
+          <div data="mohamed">
+              <h3>Mohamed</h3>
+              <p>
+                Hi everyone! My name is Mohamed! I am currently a senior studying Computer Science at the University of San Francisco. 
+                My expected graduation date is December, 2017(I cannot wait!)! I am a Bay Area native (South Bay). I am an aspiring backend software engineer, lover of soccer, and a huge music fan!
+                My responsibilities for this project included the implementations of two different d3 visuals, the overall theme,
+                the questions that we wanted to answer, and while the website was Anaelia's idea and Brian's implementation, we were all 
+                responsible for recreating our own visualization pages.</p> 
+            <p>Want to get in touch? Contact me by email, LinkedIn, or GitHub. 
+              </p>
+            
+            <div class="row">
+                    <div class="col-lg-4  col-lg-offset-4 text-center">
+                      <a href="https://www.linkedin.com/in/mohamed-elafifi-986831aa/" target="_blank">
+                        <img src = "linkedin-icon.svg" style = "width:40px; height:40px;">
+                      </a>
+                      <a href="https://www.github.com/maelafifi" target="_blank">
+                        <img src = "gitIcon.png" style = "width:40px; height:40px;">
+                      </a>
+                      <a href="mailto:mohamedaoe@gmail.com" target="_blank">
+                        <img src = "mail.png" style = "width:40px; height:40px;">
+                      </a>
+                    </div>
+
+              </div>
+          </div>
+      </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrollreveal.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+    <!-- My JavaScript -->
+    <script type="text/javascript" src="js/bios.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,27 @@
+This dashboard shows three visualizations of data regarding the San
+Francisco Fire Department calls throughout the month of December, 2016.
+All three visualizations take the numbers of calls throughout the month 
+into consideration, while each visualization uses the number of calls 
+differently. With each visualization, we can learn something different 
+about the data and the SFFD.
+
+For the first visual, the largest bubble is screaming MEDICAL, which not 
+only tells us that medical incidents are the most overwhelming call types,
+but it also begs the question as to why Medical incidents don't have a 
+separate hotline. One might imagine that the SFFD should be dealing with 
+fire related call types, but this is not the case. 
+
+For the second visual, you'll find that, unsurprisingly, the number of 
+calls are at their peak from 11AM until about 6PM, which is likely due
+to the fact that most people are out and about doing things, working,
+and the like. Call numbers significantly decrease during midnight until
+6AM, also likely to be correlated with the number of people awake at 
+those times.
+
+For the third visual, cull numbers are mapped against districts, and 
+priority. You'll notice that the original priority of calls ranges from 
+1 to 3. Calls in the Tenderloin are significantly higher than any other
+neighborhood. One other interesting thing to note from this visual is that,
+across the board, it seems that Original Priority is just about half level 
+3 and half level 2 for each district, and very rarely is the original 
+priority level 1.

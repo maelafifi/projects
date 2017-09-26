@@ -1,0 +1,4 @@
+This visualization is illustrating the number of incidents by neighborhood reported by the SF Fire Dept throughout the month of Deceember 2016. Essentially, this is a stacked bar chart with the x-axis representing all of the neighborhoods and the y-axis representing the number of incidents. In addition, using color, I encoded the totals of the priority values for each neighborhood.
+
+
+As one could expect, it seems that the most popular parts of the city (Mission District, Financial District, South of Market, and Tenderloin) exceed all other sections of the city. Something interesting to notice is that these more popular districts seem to have more even amounts of 2 and 3 priority values.

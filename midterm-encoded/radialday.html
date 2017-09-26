@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/png" href="img/fav.png"/>
+    <title>Incidents by Day</title>
+
+    <!-- Theme/Plugin CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/creative.min.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+
+  </head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="index.html">En:coded Visualizations</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Explore
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="bubble.html">Incident Type</a></li>
+                    <li><a href="boxplot.html">Response Times</a></li>
+                    <li><a href="bubblehour.html">Call Times</a></li>
+                    <li><a href="radialday.html">Call Days</a></li>
+                    <li><a href="neighborhood.html">Neighborhood Priorities</a></li>
+                  </ul>
+                </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a class="page-scroll" href="#about">D3</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#prototype">Prototype</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#portfolio">More</a>
+                  </li>
+
+                </ul>
+
+
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>What's the busiest day for the SF Fire Department?</h1>
+                <hr>
+                <p style= "color:white"> On this page, you'll find a stacked radial bar chart that sums up all incidents for the 
+                  San Francisco Fire Department in the month of December, 2016. The sum of all incidents is then divided up by the 
+                  day that each incident occurred on, and the visual gives a clear view of what days are busiest and what days are slowest. </p>
+            </div>
+            <a href="#about" class="page-scroll btn btn-default btn-xl sr-button">Go To Visual</a>
+        </div>
+    </header>
+
+    <div class="jumbotron text-center" id="">
+      <h1>San Francisco Fire Department: Busiest Day</h1>
+    </div>
+
+    <section class="content" id="about">
+      <iframe src="mohamedPrototype/d3Implementations/radialStacked.html" class="center" scrolling="no" height="510"></iframe>
+      <p style= "color:black; font-size:10px;"> Source: SF Open Data</p>
+      <p style= "color:black; font-size:10px;"> https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service-December-2016/97i8-upbq?category=Public-Safety&view_name=Fire-Department-Calls-for-Service-December-2016</p>
+      <p style= "color:black; font-size:10px;">Inspired by Brice Pierre</p>
+      <p style= "color:black; font-size:10px;">https://bl.ocks.org/bricedev/8aaef92e64007f882267</p>
+      <div class="text-center">
+        <a href="mohamedPrototype/d3Implementations/radialStacked.html" class="btn btn-primary btn-xl">Full-Sreen Visualization</a>
+      </div>
+    </section>
+  
+   <section class="no-padding content">
+
+        <p style="color:black; font-size:14px;"> This radial bar chart has a lot of information inside of it. From the very first look, you can see explicit days where there
+          are higher caller counts, and it's all towards the end of the week: Thursday, Friday, and Saturday. While it is not known for 
+          sure, I have assumed that it's because there are a lot more people out and doing things on those days, especially at later times.
+          In contrast to that, the days of the week where there are the fewest amount of calls are generally days where people spend most of 
+          their day working and/or resting from the work they had just accomplished. Sunday, the only "slow" day that is not a work day is 
+          likely slow because many people utilize this day of the week as a relaxation day, so fewer incidents might happen when there is 
+          less commotion.
+        </p>
+
+      <p style="color:black; font-size:14px;">I decided to implement this radial chart because the days of the weeks are repeating and in the same order. Moreover, I've only seen
+        a few of these types of graphs implemented, so I thought it would be nice to implement something that few people have had an exeperience
+        with. I hope you enjoyed it as much as I enjoyed it!
+        </p>
+        <p style="color:black; font-size:14px;"> The data for this radial bar chart was derived from the subset of data that Elia derived. Simply speaking, I utilized the distinct
+          count(a function in tableau), and matched it up against the days of the week(which were in number format[1-7]), and created a smaller 
+          data set based on that. As you might imagine, the resulting data set exported contained seven rows(number of days in a week), and two
+           columns(one for day of the week, and the other for the distinct count).
+        </p>
+      </section>
+  
+  
+  <section id="prototype">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 text-center">
+                      <h1 class="section-heading" style = "font-family: avenir;">Prototype</h1>
+                      <hr class="primary">
+                      <br>
+                      <br>
+                      </div>
+                      <img src="mohamedPrototype/prototype2.png" style="width:960px;height:600px; margin-left:100px" align="middle">
+
+              </div>
+          </div>
+      </section>
+  
+  <div class="jumbotron text-center" id="footer" style = "background:white ">
+        <h2>Explore More Visualizations</h2>
+      </div>
+      <section class="no-padding" id="portfolio" >
+        <div class="container-fluid">
+            <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="bubble.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/elia_prototype.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Incident Type
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="boxplot.html" class="portfolio-box">
+                      <img src="elia/eliaPrototype/box.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Response Time
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="radialday.html" class="portfolio-box">
+                      <img src="mohamedPrototype/prototype2.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                Explore
+                              </div>
+                              <div class="project-name">
+                                SFFD Data by Day of Week
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+        </div>
+        <div class="row no-gutter">
+
+              <div class="col-lg-4 col-sm-4 col-lg-offset-2 col-sm-offset-2">
+                  <a href="bubblehour.html" class="portfolio-box">
+                      <!-- <img src="mohamedPrototype/MohamedPrototype1.jpg" class="img-responsive" alt=""> -->
+                      <img src="mohamedPrototype/MohamedPrototype1.jpg"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Time of Day
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                  <a href="neighborhood.html" class="portfolio-box">
+                      <img src="brian/proto1.png"  class="img-responsive" alt="">
+                      <div class="portfolio-box-caption">
+                          <div class="portfolio-box-caption-content">
+                              <div class="project-category text-faded">
+                                  Explore
+                              </div>
+                              <div class="project-name">
+                                  SFFD Data by Neighborhood Priority
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+
+          </div>
+        </div>
+
+    </section>
+
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrollreveal.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+    <!-- My JavaScript -->
+    <script type="text/javascript" src="js/bios.js"></script>
+
+  </body>
+</html>

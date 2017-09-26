@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8 />
+	<title>Midterm</title>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+
+</head>
+<body>
+
+  <style type="text/css">
+
+    body {
+      font-family: proxima-nova,"Helvetica Neue",Helvetica,sans-serif;
+    }
+
+    svg {
+      width:85%;
+    }
+
+    .types {
+      float:left;
+      width:15%;
+    }
+
+    .types>div {
+      padding: 5px 0;
+    }
+
+    .types label {
+      padding: 0 10px 0 0;
+      font-size: 14px;
+    }
+
+    .axis-label {
+      font-size: 23px;
+      font-weight: 500;
+    }
+
+    .legend text {
+      font-size: 14px;
+    }
+
+    .axis .tick text {
+      font-size: 14px;
+    }
+
+    .axis g.tick line {
+      stroke: rgb(230, 230, 230);
+    }
+
+    .axis--x>path.domain {
+      display: none;
+    }
+
+    text.cat-total, text.total {
+      text-anchor: start;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .source {
+      font-size: 9px;
+    }
+
+  </style>
+
+  <div class="types">
+      <h2>Incident Types</h2>
+      <div>
+        <button type="button" onclick="selectAll()">Select All</button>
+        <button type="button" onclick="deselectAll()" value="Deselect All">Deselect All</button>
+      </div>
+  </div>
+
+  <svg width="880" height="650"></svg>
+
+	<script type="text/javascript">
+
+		var svg = d3.select("svg");
+
+    var margin = {
+      top: 30, right: 30,
+      bottom: 100, left: 240
+    };
+
+    var width = +svg.attr("width") - margin.left - margin.right;
+    var height = +svg.attr("height") - margin.top - margin.bottom;
+
+    var g = svg.append("g")
+        .attr("class", "plot")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var types = ['Alarms', 'Assist Police', 'Citizen Assist / Service Call', 'Fire', 'Hazards', 'Medical Incident', 'Rescue', 'Vehicle-Related', 'Other'];
+    var values = ["high priority", "medium-low priority"].reverse();
+    var colors = ["#b71d3e", "#ee734a"].reverse();
+
+
+    // make checkboxes
+    var active_types = [];
+    var typesForm = d3.select("div.types");
+    types.forEach(function(e,i) {
+
+      var block = typesForm.append("div");
+
+      block.append("input")
+        .attr("id", "input-" + i)
+        .attr("type", "checkbox")
+        .property("checked", true)
+        .attr("name", "incident-type")
+        .attr("value", e)
+        .on("change", update);
+
+      block.append("label")
+        .attr("for", "input-" + i)
+        .text(e);
+
+      active_types.push(e);
+
+    });
+
+    // make legend
+    var legend = svg.append("g")
+        .attr("class", "legend")
+        .attr("transform", "translate(" + (width/2 + 40) + "," + 25 + ")");
+
+    values.forEach(function(e,i) {
+      legend.append("rect")
+            .attr("x", i*180)
+            .attr("y", -13)
+            .attr("height", 15)
+            .attr("width", 15)
+            .attr("fill", colors[i]);
+      legend.append("text")
+          .attr("x", (i*180)+20)
+          .text(e);
+    });
+
+    // source
+    var src = svg.append("g")
+        .attr("class", "source")
+        .attr("transform", "translate(" + 0 + "," + (margin.top + height + 80) + ")");
+
+    src.append("text")
+      .attr("y", 0)
+      .text("Source: SF Opendata");
+
+    src.append("text")
+      .attr("y", 10)
+      .text("https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service-December-2016/97i8-upbq?category=Public-Safety&view_name=Fire-Department-Calls-for-Service-December-2016");
+
+    // make scales
+    var scales = {};
+    scales.x = d3.scaleLinear().rangeRound([0, width]).nice();
+    scales.y = d3.scaleBand().rangeRound([height, 0]).paddingInner(0.1);
+
+    // make axes
+    var axes = {}
+    axes.x = d3.axisBottom(scales.x).tickSize(-height,0,0);
+    axes.y = d3.axisLeft(scales.y);
+
+    g.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")");
+
+    g.append("g")
+        .attr("class", "axis axis--y")
+        .attr("transform", "translate(0," + 0 + ")");
+
+    // make axes labels
+    svg.append("text")
+        .attr("class", "axis-label")             
+        .attr("transform",
+              "translate(" + (((width + margin.left + margin.right)/2) + 80) + " ," + 
+                             (height + margin.top + 50) + ")")
+        .style("text-anchor", "middle")
+        .text("Incident Totals");
+
+    svg.append("text")
+        .attr("class", "axis-label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 10)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Neighborhood"); 
+
+    var data;
+    d3.csv("location-type-priority-totals.csv", function(d){
+      data = d.map(function(a) {
+        var obj = { "neighborhood": a.location, totals: {}, values: {}};
+
+        types.forEach(function(e) {
+
+          obj.totals[e] = 0;
+          obj.values[e] = {}
+
+          values.forEach(function(v){
+            var val = (+a[e + " " + v]);
+            obj.totals[e] += val;
+            obj.values[e][v] = val;
+          });
+
+        });
+
+        return obj;
+      });
+
+      // bars
+      var barG = g.append("g")
+          .attr("class", "bars");
+
+      // bar-groups
+      var bars = barG.selectAll(".bar-group")
+           .data(data);
+
+      var groups = bars.enter()
+        .append("g")
+          .attr("class", "bar-group")
+          .attr("data", function(d) { return d.neighborhood; })
+          .on("mouseover", function(d, i) {
+
+              d3.select(this)
+                  .select(".text-group")
+                  .transition()
+                    .duration(400)
+                    .attr("transform", function() {
+                      var sum = 0;
+                      active_types.forEach(function(e){
+                        sum += d.totals[e];
+                      });
+                      return "translate(" + (scales.x(sum) + 5) + "," + 11 + ")";
+                    })
+                    .attr("fill-opacity", "1");
+
+          })
+          .on("mouseout", function(d, i) {
+
+              d3.select(this)
+                  .select(".text-group")
+                  .transition()
+                    .duration(400)
+                    .attr("transform", "translate(" + (scales.x(0)) + "," + 11 + ")")
+                    .attr("fill-opacity", "0");
+
+          });
+
+      var text = groups.append("g")
+        .attr("class", "text-group")
+        .attr("transform", "translate(" + (scales.x(0)) + "," + 10 + ")")
+        .attr("fill-opacity", "0");
+
+      text.selectAll("text.cat-total")
+          .data(values)
+          .enter()
+            .append("text")
+            .attr("class", "cat-total");
+
+      text.append("text")
+            .attr("class", "total");
+
+      // bar categories
+      var cats = groups.selectAll(".bar-cat")
+            .data(values);
+
+      cats.enter()
+          .append("rect")
+          .attr("class", "bar-cat")
+          .attr("fill", function(d,i){ return colors[i]; });
+
+      update();
+
+    });
+
+    function update() {
+
+      // update active_types
+      active_types = []
+      d3.selectAll("div.types input")
+        .each(function(d,i) {
+          if (d3.select(this).property("checked")) {
+            var val = d3.select(this)
+                .attr("value")
+            active_types.push(val);
+          }
+      });
+
+      // sort data
+      data.sort(function(a, b) {
+        var aVal = d3.sum(d3.entries(a.totals), function(e) {
+          if (active_types.includes(e.key)) {
+            return e.value;
+          } else {
+            return 0;
+          }
+        });
+        var bVal = d3.sum(d3.entries(b.totals), function(e) {
+          if (active_types.includes(e.key)) {
+            return e.value;
+          } else {
+            return 0;
+          }
+        });
+        return aVal - bVal;
+      });
+
+      var maxVal = d3.max(data, function(d) {
+        return d3.sum(d3.entries(d.totals), function(e) {
+          if (active_types.includes(e.key)) {
+            return e.value;
+          } else {
+            return 0;
+          }       
+        });
+      });
+
+      var dataPad = .1 * maxVal;
+      scales.x.domain([0, maxVal + dataPad]);
+      scales.y.domain(data.map(function(d) { return d.neighborhood; }));
+
+      // update axes
+      g.select("g.axis--x")
+        .transition()
+        .duration(1500)
+        .call(axes.x);
+
+      g.select("g.axis--y")
+        .transition()
+        .duration(1500)
+        .call(axes.y);
+
+      // update bar values
+      svg.selectAll("g.bar-group")
+          .each(function(e, j) {
+            d3.select(this)
+              .selectAll(".bar-cat")
+                .attr("height", scales.y.bandwidth())
+                .transition()
+                .duration(1500)
+                .attr("width", function(d, i) {
+                  var sum = 0;
+                  active_types.forEach(function(t){
+                    sum += scales.x(e.values[t][d]);
+                  });
+                  return sum;
+                })
+                .attr("x", function(d, i) {
+                  var sum = 0;
+                  for (var c = i-1; c > -1; c--) {
+                    active_types.forEach(function(t){
+                      sum += scales.x(e.values[t][values[c]]);
+                    });
+                  }
+                  return sum;
+                });
+          });
+
+      var textFill = [];
+      data.forEach(function(e, i) {
+        textFill[i] = 0;
+      });
+
+      svg.selectAll("g.bar-group")
+          .each(function(e, j) {
+
+            // update cat totals
+            d3.select(this)
+              .selectAll("g.text-group .cat-total")
+              .text(function(d) {
+                var sum = 0;
+                active_types.forEach(function(t){
+                  sum += e.values[t][d]; 
+                });
+                return sum;
+              })
+              .attr("x", function(d) {
+                var val = textFill[j];
+                textFill[j] += this.getComputedTextLength() + 5;
+                return val;
+              })
+              .attr("fill", function(d, i) { return colors[i]; });
+
+            // update total
+            d3.select(this)
+              .select(".total")
+              .text(function(d) {
+                var sum = 0;
+                active_types.forEach(function(t){
+                  sum += e.totals[t]; 
+                });
+                return sum;
+              })
+              .attr("x", function(d) {
+                var val = textFill[j];
+                textFill[j] += this.getComputedTextLength() + 5;
+                return val;
+              })
+          });
+
+      // sort bars
+      svg.selectAll("g.bar-group")
+        .sort(function(a, b) { return scales.y(a.neighborhood) - scales.y(b.neighborhood); });
+
+      svg.selectAll(".bar-group")
+          .transition()
+          .duration(1500)
+          .attr("transform", function(d) { return "translate(0," + scales.y(d.neighborhood) + ")"; });
+
+    }
+
+    function selectAll() {
+      d3.selectAll("div.types input")
+        .property("checked", true);
+      update();
+    }
+
+    function deselectAll() {
+      d3.selectAll("div.types input")
+        .property("checked", false);
+      update();
+    }
+  
+
+	</script>
+
+</body>
+</html>
