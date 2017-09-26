@@ -1,0 +1,61 @@
+source,target,value
+Top 20,Chief Executives,1150
+Top 20,Engineering Managers,143
+Top 20,Pharmacists,222
+Top 20,Physicians/Surgeons,806
+Top 20,Lawyers,745
+Top 20,Chemical Engineers,91
+Top 20,Aerospace Engineers,124
+Top 20,Dentists,61
+Top 20,Hardware Engineers,46
+Top 20,Software Engineers,1351
+Top 20,Nurse Practitioners,144
+Top 20,Computer Information Sys,592
+Top 20,Database Admin,83
+Top 20,Electrical Engineers,271
+Top 20,Information Analysts,85
+Top 20,Pilots/Flight Engineers,119
+Top 20,Engineers - Other,493
+Top 20,Mechanical Engineers,335
+Top 20,Judges/Judicial,56
+Top 20,Environmental Scientists,79
+Chief Executives,Men,832
+Engineering Managers,Men,134
+Pharmacists,Men,89
+Physicians/Surgeons,Men,497
+Lawyers,Men,446
+Chemical Engineers,Men,73
+Aerospace Engineers,Men,114
+Dentists,Men,34
+Hardware Engineers,Men,46
+Software Engineers,Men,1084
+Nurse Practitioners,Men,11
+Computer Information Sys,Men,443
+Database Admin,Men,46
+Electrical Engineers,Men,245
+Information Analysts,Men,65
+Pilots/Flight Engineers,Men,112
+Engineers - Other,Men,430
+Mechanical Engineers,Men,311
+Judges/Judicial,Men,35
+Environmental Scientists,Men,58
+Chief Executives,Women,318
+Engineering Managers,Women,9
+Pharmacists,Women,133
+Physicians/Surgeons,Women,308
+Lawyers,Women,299
+Chemical Engineers,Women,18
+Aerospace Engineers,Women,10
+Dentists,Women,27
+Hardware Engineers,Women,12
+Software Engineers,Women,266
+Nurse Practitioners,Women,133
+Computer Information Sys,Women,150
+Database Admin,Women,37
+Electrical Engineers,Women,26
+Information Analysts,Women,20
+Pilots/Flight Engineers,Women,7
+Engineers - Other,Women,63
+Mechanical Engineers,Women,24
+Judges/Judicial,Women,21
+Environmental Scientists,Women,21

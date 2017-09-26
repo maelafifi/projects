@@ -1,0 +1,61 @@
+source,target,value
+Bottom 20,Packaging,225
+Bottom 20,Animal Caretakers,88
+Bottom 20,Entertainment Attendants,79
+Bottom 20,Food Servers,104
+Bottom 20,Personal Care Aides,761
+Bottom 20,Waiters,949
+Bottom 20,Automative/Watercraft Attendants,72
+Bottom 20,Packers/Packagers,382
+Bottom 20,Laundry/Dry-Cleaners,135
+Bottom 20,Childcare,405
+Bottom 20,Cooks,1407
+Bottom 20,Hosts/Hostesses,74
+Bottom 20,Maids/Cleaners,781
+Bottom 20,Sewing Machine Operators,166
+Bottom 20,Cafeteria Attendants,133
+Bottom 20,Food Prep,477
+Bottom 20,Cashiers,1367
+Bottom 20,Food Prep/Servers - Fast Food,197
+Bottom 20,Dishwashers,172
+Bottom 20,Coffee Attendants,69
+Packaging,Men,112
+Animal Caretakers,Men,17
+Entertainment Attendants,Men,48
+Food Servers,Men,33
+Personal Care Aides,Men,125
+Waiters,Men,342
+Automative/Watercraft Attendants,Men,67
+Packers/Packagers,Men,166
+Laundry/Dry-Cleaners,Men,55
+Childcare,Men,24
+Cooks,Men,892
+Hosts/Hostesses,Men,24
+Maids/Cleaners,Men,120
+Sewing Machine Operators,Men,52
+Cafeteria Attendants,Men,82
+Food Prep,Men,215
+Cashiers,Men,402
+Food Prep/Servers - Fast Food,Men,72
+Dishwashers,Men,142
+Coffee Attendants,Men,20
+Packaging,Women,113
+Animal Caretakers,Women,71
+Entertainment Attendants,Women,31
+Food Servers,Women,71
+Personal Care Aides,Women,636
+Waiters,Women,607
+Automative/Watercraft Attendants,Women,5
+Packers/Packagers,Women,216
+Laundry/Dry-Cleaners,Women,80
+Childcare,Women,381
+Cooks,Women,515
+Hosts/Hostesses,Women,50
+Maids/Cleaners,Women,661
+Sewing Machine Operators,Women,114
+Cafeteria Attendants,Women,51
+Food Prep,Women,262
+Cashiers,Women,965
+Food Prep/Servers - Fast Food,Women,125
+Dishwashers,Women,30
+Coffee Attendants,Women,49

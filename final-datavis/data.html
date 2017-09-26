@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Wage Gap Data</title>
+
+    <!-- Theme/Plugin CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/creative.min.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+
+  </head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="index.html">Mohamed Elafifi</a>
+            </div>
+          
+            
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Explore
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="index.html">Back To Visuals</a></li>
+                  </ul>
+                </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a class="page-scroll" href="index.html">VISUALS</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#team"> About Me </a>
+                  </li>
+
+                </ul>
+
+
+            </div>
+          </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 style = "color: orange;">About The Data</h1>
+              
+              <a href="#1" class="page-scroll btn btn-primary btn-xl">Let's take a look</a>
+            </div>
+        </div>
+    </header>
+  <div class="jumbotron text-center" id="1">
+      <h1>Dataset 1: Bureau of Labor Statistics</h1>
+    </div>
+
+    <section class="no-padding content">
+    <h3>The Data</h3>
+      <p>
+      The primary dataset that was used in this project is from Bureau of Labor Statistics. The dataset consists of about 600 rows and 7 columns.
+      The columns include an Occupation, Total Number of Workers, Average Pay of Worker, Total Number of Female Workers, Average Pay of Female Workers,
+      Total Number of Male Workers, and the Average Pay of Male Workers. Each row in the data set defines the aforementioned columns based on the occupation
+      of the current row. The data contains some NULL values. These values are there in the event that the number workers in a particular occupation is too 
+      few (less than 50k). This helps to minimize the possibility of a lie factor in the data. 
+      </p>
+      <h3>Processing and Utilization: Scatterplot</h3>
+      <p>
+       The dataset used in the scatterplot is pretty straight forward. Using an SQl-esque statement in Tableau, I selected all rows from the dataset where there were no null values
+        and I ended up with 119 total occupations where both, women and men had a minimum of 50k records. I then extraced only columns for average overall pay, 
+        average womens pay, and average mens pay. I then wrote a very simple java program that read in my csv file of the aforementioned columns and calculated the 
+        ratio of women:men pay in each particular occupation. The program subsequently appended a 0, 1, or 2 to a new text file, adding a new column that detailed 
+        whether women are paid higher, lower, or similar in that particular occupation. In hindsight, it might have been smart of me to append the ratio to the new 
+        file, as I do that work again when the d3 script is going through my now cleaned dataset.
+      </p>
+      <h3>Processing and Utilization: Sankey Diagram</h3>
+      <p>
+       Tableau is a very useful tool. It made my life a heck of a lot easier, overall, but the processing for this dataset was going to be tedious no matter what I tried. 
+       Getting the values that I wanted for this data was simple. Tableau allowed me sort my data by the highest paying occupations, and I subsequently extracted the top 20 
+       occupations and created a separate csv file. The same thing was done with bottom 20 paying occupations. Now for the hard part... I then had to manually write out a new
+        csv file that included a source, target, and value column. From there, I had to connect every single data point, individually, to it's target destination. So, for Men, 
+        I connected it to each field in the top 20 and each field in the bottom 20. That, in itself, is 40 lines of csv written. I then did the same thing for women. Similarly, 
+        I had to connect other nodes based on how I wanted the sankey diagram to showup. A total of 122 lines of csv were typed to get this beauty, and I am thoroughly happy with 
+        how this one, in particular, came out. 
+      </p>
+<div class="text-center">
+        <a href="https://www.bls.gov/cps/cpsaat39.htm" class="btn btn-primary btn-xl">Link to Dataset</a>
+      </div>
+    </section>
+    
+    <div class="jumbotron text-center" id="2">
+      <h1>Dataset 2: American Community Survey with US Census Bureau</h1>
+    </div>
+  <section class="no-padding content">
+    <h3>The Data</h3>
+      <p>
+      The secondary dataset was compiled by the American Community Survey in conjunction United States Census Bureau. It was further compiled by the National Women's Law
+       center. The dataset includes state income averages for males and females for each state, and ranks each state by it's women:men pay ratio. It also dialogues the wage 
+       wage gap. There was no licensing information on the recompiled data, so I called the number on the web page that I found the dataset, and they said I would have no 
+       issues utilizing their data, and it is publicly available for usage. They did give me the name of the particular survey that they used, although it is too large and 
+       for me to comprehend. The survey name is: ACSB08007.
+      </p>
+   
+      <h3>Processing and Utilization: </h3>
+      <p>
+        This dataset was really simple. I threw it into a text editor and replaced all tabs with commas (I prefer csv). The wage gap and rank were unused, so I subsequently 
+        deleted those columns. The only columns that were used, however, were the state names, women pay, and men pay columns. I calculated my own ratio within the d3 code.
+        The difficult part of this particular dataset was that it did not have any coordinates, so I had to find a map projection that actually had state names as identifiers. 
+        Fortunately, a cool book called, "d3 Tips and Tricks v4.x" that is available on github had a solution for my dillema and I utilized their json file for my map projection.
+      </p>
+
+
+
+      <div class="text-center">
+        <a href="https://nwlc.org/wp-content/uploads/2015/09/Wage-Gap-State-By-State.pdf" class="btn btn-primary btn-xl">Link to Dataset</a>
+      </div>
+    </section>
+  
+  
+  
+  
+  
+  
+  <div class="jumbotron text-center" id="team">
+      <h1>About Me</h1>
+    </div>
+    <section class="no-padding content">
+      <div class="bio-pics">
+          <img class="img-circle active" src="img/selfie.jpeg" data="Mohamed">
+        </div>
+  <div class="bio-content">
+    <div data="Mohamed" class="active">
+      <h3>Mohamed</h3>
+              <p>
+                Hi everyone! My name is Mohamed! I am currently a senior studying Computer Science at the University of San Francisco. 
+                My expected graduation date is December, 2017(I cannot wait!)! I am a Bay Area native (South Bay). I am an aspiring backend 
+                software engineer, lover of soccer, and a huge music fan!
+               </p> 
+            <p>Want to get in touch? Contact me by email, LinkedIn, or GitHub. 
+              </p>
+            
+            <div class="row">
+                    <div class="col-lg-4  col-lg-offset-4 text-center">
+                      <a href="https://www.linkedin.com/in/mohamed-elafifi-986831aa/" target="_blank">
+                        <img src = "img/linkedin-icon.svg" style = "width:40px; height:40px;">
+                      </a>
+                      <a href="https://www.github.com/maelafifi" target="_blank">
+                        <img src = "img/gitIcon.png" style = "width:40px; height:40px;">
+                      </a>
+                      <a href="mailto:mohamedaoe@gmail.com" target="_blank">
+                        <img src = "img/mail.png" style = "width:40px; height:40px;">
+                      </a>
+                    </div>
+
+              </div>
+          </div>
+      </div>
+     </section>
+  
+  <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrollreveal.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+    <!-- My JavaScript -->
+    <script type="text/javascript" src="js/bios.js"></script>
+
+  </body>
+</html>

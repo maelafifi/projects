@@ -1,0 +1,393 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+.background
+{
+	fill: #f0f0f0;
+	pointer-events: all;
+}
+  
+.tipSVG
+{
+	font-size: 5em;
+}
+  body
+{
+  background: silver;
+}
+	
+
+.axis path,
+.axis line
+{
+	fill: none;
+	stroke: rgba(0, 0, 0, 0.1);
+	shape-rendering: crispEdges;
+  
+}
+.axisLine
+{
+	fill: none;
+	shape-rendering: crispEdges;
+	stroke: rgba(0, 0, 0, 0.5);
+	stroke-width: 2px;
+  
+}
+.dot
+{
+	fill-opacity: 1;
+  
+}
+.d3-tip
+{
+	line-height: 1;
+	font-weight: bold;
+	padding: 12px;
+	background: rgba(255, 255, 255, 0.8);
+  color: black;
+	border-radius: 2px;
+  
+  font-size: .8em;
+}
+
+.d3-tip:after
+{
+	box-sizing: border-box;
+	display: inline;
+	font-size: 10px;
+	width: 100%;
+	line-height: 1;
+	color: rgba(255, 255, 255, 0.8);
+	content: "\25BC";
+	position: absolute;
+	text-align: center;
+  
+}
+
+.d3-tip.n:after
+{
+	margin: -1px 0 0 0;
+	top: 100%;
+	left: 0;
+}
+h2.title
+{
+	transform: translateX(21vw);
+}
+  
+
+
+
+</style>
+</head>
+<body>
+
+<h2 class = "title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ratio of Women to Men/Average Pay</h2>
+<center><input type="button" id="xAxis" value="Women:Men / Women:Average"></center>
+
+<center>
+	<div id="scatter"></div>
+</center>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.3/d3-tip.min.js"></script>
+<script>
+	var margin = { top: 25, right: 175, bottom: 35, left: 50 },
+	outerWidth = 800,
+	outerHeight = 560,
+	width = outerWidth - margin.left - margin.right,
+	height = outerHeight - margin.top - margin.bottom;
+ 
+	var x = d3.scale.linear()
+	.range([0, width]).nice();
+	var y = d3.scale.linear()
+	.range([height, 0]).nice();
+	var xCat = "earningsMen",
+	yCat = "earningsWomen",
+	Occ = "Occupation",
+	count = 1; 
+	d3.csv("data.csv", function(data)
+	{ 
+		data.forEach(function(d)
+		{
+			d.workersMen = +d.workersMen;
+			d.earningsMen = +d.earningsMen;
+			d.workersWomen = +d.workersWomen;
+			d.earningsWomen = +d.earningsWomen;
+  		}); 
+ 
+		var xMax = d3.max(data, function(d) { return d[xCat]; }) * 1.05,
+			yMax = d3.max(data, function(d) { return d[yCat]; }) * 1.05;
+			x.domain([0, 2500]);
+			y.domain([0, 2500]);
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient("bottom")
+			.ticks(6)
+			.tickSize(-height)
+			.tickFormat(function(d, i)
+			{
+  				return "$" + d/1000 + "k";
+			});
+		
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left")
+			.ticks(6)
+			.tickSize(-width)
+			.tickFormat(function(d, i)
+			{
+				return "$" + d/1000 + "k";
+			}); 
+		
+		var color = d3.scale.ordinal()
+			.domain(data.map(function(d){ return +d.more;}))
+			.range(['blue','green', '#fa9fb5']);
+		
+		var tip = d3.tip()
+			.attr("class", "d3-tip")
+			.offset([-60, 0])
+			.html(function(d)
+			{
+				var z;
+				var ratio = d[yCat]/d[xCat];
+        ratio = ratio.toPrecision(3);
+        if(xCat === "earningsMen")
+				{
+					l = "Women to Men Earnings Ratio: ";
+				}
+        		else
+				{
+					l = "Women to Average Earnings Ratio: ";
+				}
+				return "Occupation: " + d[Occ]
+        			+ "<div id='tipDiv'></div>" 
+				+ l + ratio;;
+			});
+		var zoomer = d3.behavior.zoom()
+			.x(x)
+			.y(y)
+			.scaleExtent([.25, 2.5])
+			.on("zoom", zoom);
+		var svg = d3.select("#scatter")
+			.append("svg")
+			.attr("width", outerWidth)
+			.attr("height", outerHeight)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+			.call(zoomer);
+			
+		svg.call(tip);
+		
+		svg.append("rect")
+			.attr("width", width)
+			.attr("height", height)
+    	.attr("class", "background");
+		
+		svg.append("g")
+			.classed("x axis", true)
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis)
+			.append("text")
+			.classed("label", true)
+			.attr("x", width+10)
+			.attr("y", margin.bottom-5)
+			.style("text-anchor", "end")
+			.text("Men Earnings (Weekly)");
+		
+		svg.append("g")
+			.classed("y axis", true)
+			.call(yAxis)
+			.append("text")
+			.classed("label", true)
+			.attr("y", -margin.left)
+			.attr("dy", "2.71em")
+			.attr("x", -margin.left)
+			.attr("dx", "14em")
+			.style("text-anchor", "end")
+			.text("Women Earnings (Weekly)");
+		
+		var objects = svg.append("svg")
+			.classed("objects", true)
+			.attr("width", width)
+			.attr("height", height);
+		objects.selectAll(".dot")
+			.data(data)
+			.enter().append("circle")
+			.classed("dot", true)
+			.attr("r", 3)
+			.attr("transform", transform)
+			.style("fill", function(d)
+			{
+				var rat = d[xCat]/d[yCat];
+				if(rat > 1.05)
+				{
+					return "blue";
+				}
+      				else if(rat>.95)
+          			{
+            				return "green";
+          			}
+				else
+				{
+					return "#fa9fb5";
+				}
+			})
+			.on("mouseover",  function(d)
+			{
+				tip.show(d);
+				var men = d.earningsMen;
+				var women = d.earningsWomen;
+      	var total = d.earningsTotal;
+				var dataset = [men, total,women];
+				var barHeight = 15;
+      			
+      			var tipSVG = d3.select("#tipDiv")
+      				.append("svg")
+      				.attr("width", 150)
+      				.attr("height", barHeight * 3);
+     				
+     			var x = d3.scale.linear()
+     				.domain([0, d3.max(dataset)])
+     				.range([0, 150]);
+
+				var bar = tipSVG.selectAll("g")
+					.data(dataset)
+					.enter().append("g")
+					.attr("transform", function(d, i)
+					{
+						return "translate(0," + i * barHeight + ")";
+					});
+				
+				bar.append("rect")
+        .attr("width", 0)
+      	.transition()
+      	.duration(1000)
+					.attr("width", x)
+					.attr("height", barHeight - 1)
+					.attr("fill", function(d)
+               {
+          if(d === men)
+            { 
+              return "blue";
+            }
+          else if (d === women)
+            {
+              return "#fa9fb5";
+            }
+          else
+            {
+              return "green";
+            }
+        });
+
+				bar.append("text")
+					.attr("x", 2)
+					.attr("y", barHeight / 2)
+					.attr("dy", ".35em")
+					.attr("fill", function(d)
+               {
+          if(d === men || d === total)
+            {
+             return "#f0f0f0";
+             }
+          else
+            {
+              return "grey";
+            }
+        })
+        	.style("font-size", "10px")
+					.text(function(d)
+					{
+						if(d === men)
+						{
+							return "Mens Salary: $" + d;
+						}
+						else if(d === women)
+						{
+							return "Womens Salary: $" + d;
+						}
+          else
+            {
+              return "Average Salary: $" + d;
+            }
+					});
+				})
+			.on("mouseout", tip.hide);
+  
+		var legend = svg.selectAll(".legend")
+			.data(color.domain())
+			.enter().append("g")
+			.classed("legend", true)
+			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+		legend.append("circle")
+			.attr("r", 3.5)
+			.attr("cx", width + 20)
+			.attr("fill", color);
+		legend.append("text")
+			.attr("x", width + 26)
+			.attr("dy", ".35em")
+			.text(function(d)
+			{
+				if(d == 1)
+				{
+					return "Men Paid Higher";
+				}
+				else if(d == 2)
+				{
+					return "Minimal Difference"
+				}
+				else
+				{
+					return "Women Paid Higher";
+				}
+			});
+		
+		d3.select("input").on("click", change);
+		function change()
+		{
+			if(count == 1)
+			{
+				xCat = "earningsTotal";
+				xMax = d3.max(data, function(d) { return d[xCat]; });
+				zoomer.x(x.domain([0, 2500])).y(y.domain([0, 2500]));
+				var svg = d3.select("#scatter").transition();
+				svg.select(".x.axis").duration(750).call(xAxis)
+				.select(".label").text("Average Earnings (weekly)");
+				svg.select(".y.axis").duration(750).call(yAxis);
+				objects.selectAll(".dot").transition().duration(1000)
+				.attr("transform", transform); 
+        		count--;
+      		}
+			else
+			{
+				xCat = "earningsMen";
+				xMax = d3.max(data, function(d) { return d[xCat]; });
+				zoomer.x(x.domain([0, 2500])).y(y.domain([0, 2500]));
+				var svg = d3.select("#scatter").transition();
+				svg.select(".x.axis").duration(750).call(xAxis)
+				.select(".label").text("Men Earnings (weekly)");
+				svg.select(".y.axis").duration(750).call(yAxis);
+				objects.selectAll(".dot").transition().duration(1000)
+				.attr("transform", transform);
+				count++;  
+			}
+		}
+		
+		function zoom()
+		{
+			svg.select(".x.axis").call(xAxis);
+			svg.select(".y.axis").call(yAxis);
+			svg.selectAll(".dot")
+				.attr("transform", transform);
+  		}
+		
+		function transform(d)
+		{
+			return "translate(" + x(d[xCat]) + "," + y(d[yCat]) + ")";
+		}
+	});
+</script>
+</body>
+</html>

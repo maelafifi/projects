@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+svg
+{
+	font: 10px sans-serif;
+	padding: 10px;
+}
+.axis,
+.frame
+{
+	shape-rendering: crispEdges;
+}
+
+.axis line
+{
+	stroke: #ddd;
+}
+
+.axis path
+{
+	display: none;
+}
+
+.cell text
+{
+	font-weight: bold;
+	text-transform: capitalize;
+}
+
+.frame
+{
+	fill: none;
+	stroke: #aaa;
+}
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 75px;
+  background: white;
+}
+
+circle
+{
+	fill-opacity: 0;
+}
+
+circle.hidden
+{
+	fill: #ccc !important;
+}
+
+.extent
+{
+	fill: #000;
+	fill-opacity: .125;
+	stroke: #fff;
+}
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 960,
+size = 155,
+padding = 20;
+
+var x = d3.scale.linear()
+.range([padding / 2, size - padding / 2]);
+
+var y = d3.scale.linear()
+.range([size - padding / 2, padding / 2]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom")
+.ticks(5)
+.tickFormat(function(d, i)
+           {
+  return d/1000 + "k";
+});
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.orient("left")
+.ticks(5)
+.tickFormat(function(d, i)
+           {
+  return d/1000 + "k";
+});
+
+d3.csv("DataFinal.csv", function(error, data)
+{
+	if (error) throw error;
+
+	var domainPerField = {},
+	field = d3.keys(data[0]).filter(function(d) { return d !== "Occupation"; }),
+	n = field.length;
+
+	field.forEach(function(field1)
+	{
+		domainPerField[field1] = d3.extent(data, function(d) { return +d[field1]; });
+	});
+
+	xAxis.tickSize(size * n);
+	yAxis.tickSize(-size * n);
+
+	var svg = d3.select("body").append("svg")
+			.attr("width", size * n + padding)
+			.attr("height", size * n + padding)
+			.append("g")
+			.attr("transform", "translate(" + padding + "," + padding / 2 + ")");
+  
+  var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+	svg.selectAll(".x.axis")
+		.data(field)
+		.enter().append("g")
+		.attr("class", "x axis")
+		.attr("transform", function(d, i) { return "translate(" + (n - i - 1) * size + ",0)"; })
+		.each(function(d) { x.domain(domainPerField[d]); d3.select(this).call(xAxis); });
+
+	svg.selectAll(".y.axis")
+		.data(field)
+		.enter().append("g")
+		.attr("class", "y axis")
+		.attr("transform", function(d, i) { return "translate(0," + i * size + ")"; })
+		.each(function(d) { y.domain(domainPerField[d]); d3.select(this).call(yAxis); });
+
+	var cell = svg.selectAll(".cell")
+			.data(cross(field, field))
+			.enter()
+			.append("g")
+			.attr("class", "cell")
+			.attr("transform", function(d)
+            {
+      			  return "translate(" + (n - d.i - 1) * size + "," + d.j * size + ")";
+      			})
+			.each(plot);
+
+	// Titles for the diagonal.
+	cell.filter(function(d){ return d.i === d.j;})
+    .append("text")
+		.attr("x", padding)
+		.attr("dx", "-1.01em")
+		.attr("y", padding)
+		.attr("dy", "-1.2em")
+		.text(function(d) 
+	  { 
+  if(d.x === "earningsMen")
+  {
+    return "Median Mens Earning (Weekly)";
+  }
+  else if(d.x === "earningsWomen")
+  {
+    return "Median Womens Earning (Weekly)";
+  }
+  else if(d.x === "earningsTotal")
+  {
+    return "Median Total Earnings (Weekly)";
+  }
+  else if(d.x === "workersWomen")
+  {
+    return "Women Workers (In Thousands)";
+  }
+  else if(d.x === "workersMen")
+  {
+    return "Men Workers (In Thousands)";
+  }
+  });
+
+
+	function plot(p)
+	{
+		var cell = d3.select(this);
+		
+		x.domain([0,d3.max(domainPerField[p.x])+100]);
+   		y.domain([0,d3.max(domainPerField[p.y])+100]);
+
+		cell.append("rect")
+			.attr("class", "frame")
+			.attr("x", padding / 2)
+			.attr("y", padding / 2)
+			.attr("width", size - padding)
+			.attr("height", size - padding);
+
+
+		cell.selectAll("circle")
+			.data(data)
+			.enter()
+			.append("circle")
+			.attr("cx", function(d) { return x(d[p.x]); })
+			.attr("cy", function(d) { return y(d[p.y]); })
+			.attr("r", 2)
+			.style("stroke", function(d)
+			{
+				if(p.y === "workersMen")
+				{
+					var colorScale = d3.scale.linear()
+						.domain([51, 1869])
+						.range(["#b3ffb3","#003300"]);
+					
+					return colorScale(+d[p.y]);
+				}
+				else if(p.y === "workersTotal")
+				{
+					var colorScale = d3.scale.linear()
+						.domain([105, 2960])
+						.range(["#b3ffb3","#003300"]);
+				
+					return colorScale(+d[p.y]);
+				}
+				else if(p.y === "earningsMen")
+				{
+					var colorScale = d3.scale.linear()
+						.domain([407, 2419])
+						.range(["#b3ffb3","#003300"]);
+				
+					return colorScale(+d[p.y]);
+				}
+				else if(p.y === "earningsTotal")
+				{
+					var colorScale = d3.scale.linear()
+						.domain([414, 2303])
+						.range(["#b3ffb3","#003300"]);
+				
+					return colorScale(+d[p.y]);
+				}
+				else if(p.y === "workersWomen")
+				{
+					var colorScale = d3.scale.linear()
+						.domain([51, 2231])
+						.range(["#b3ffb3","#003300"]);
+					
+					return colorScale(+d[p.y]);
+				}
+				else if(p.y === "earningsWomen")
+				{
+					var colorScale = d3.scale.linear()
+						.domain([403, 1876])
+						.range(["#b3ffb3","#003300"]);
+	
+					return colorScale(+d[p.y]);
+				}
+				else 
+				{
+					var colorScale = d3.scale.linear()
+						.domain([.405, .79])
+						.range(["#b3ffb3","#003300"]);
+				
+					return colorScale(+d[p.y]);
+				}
+			})
+    .on("mouseover", function(d) {
+      
+      var y;
+      var x;
+      if(p.y === "workersMen")
+      {
+        y = "Men Workers (thousands): "
+      }
+      else if(p.y === "workersWomen")
+      {
+        y = "Women Workers (thousands): "
+      }
+      else if(p.y === "earningsWomen")
+      {
+        y = "Average Women Earning: "
+      }
+      else if(p.y === "earningsMen")
+      {
+        y = "Average Men Earning: "
+      }
+      else if(p.y === "earningsTotal")
+      {
+        y = "Average Overall Earning: "
+      }
+      
+      if(p.x === "workersMen")
+      {
+        x = "Men Workers (thousands): "
+      }
+      else if(p.x === "workersWomen")
+      {
+        x = "Women Workers (thousands): "
+      }
+      else if(p.x === "earningsWomen")
+      {
+        x = "Average Women Earning: "
+      }
+      else if(p.x === "earningsMen")
+      {
+        x = "Average Men Earning: "
+      }
+      else if(p.x === "earningsTotal")
+      {
+        x = "Average Overall Earning: "
+      }
+      
+      tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html(d.Occupation + "<br/>"  +
+                      y +d[p.y] 
+	        + "<br/> "+ x +d[p.x])
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0);
+      });
+    
+    ;
+		}
+}); 
+
+function cross(a, b)
+{
+	var c = [], n = a.length, m = b.length, i, j;
+	for (i = -1; ++i < n;) for (j = -1; ++j < m;) 
+	{
+		c.push({x: a[i], i: i, y: b[j], j: j});
+	}
+	return c;
+}
+
+</script>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Wage Gap</title>
+
+    <!-- Theme/Plugin CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/creative.min.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css" type="text/css">
+
+  </head>
+
+<body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="index.html">Mohamed Elafifi</a>
+            </div>
+          
+            
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+                  <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Explore
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class = "page-scroll" href="#vis1">Income Gap Map</a></li>
+                    <li><a class = "page-scroll" href="#vis2">Ungolden Ratio</a></li>
+                    <li><a class = "page-scroll" href="#vis3">Top and Bottom 20</a></li>
+                  </ul>
+                </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                      <a class="page-scroll" href="#vis1">VISUALS</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="data.html">About The Data</a>
+                  </li>
+                  <li>
+                      <a class="page-scroll" href="#team"> About Me </a>
+                  </li>
+
+                </ul>
+
+
+            </div>
+          </div>
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1 style = "color: orange;">Are women REALLY paid less than men?</h1>
+              <p style="color:white; font-size:17px;"> 
+                What motivated me to look into this? Well, a little while ago, I received an offer for an internship that pays pretty well. My sister,
+                albeit happy for me, was upset that she could not find a decent paying job, to which I replied, "Should have studied something more
+                useful, instead of getting a crappy degree." My mom then hopped into the conversation and said, "No matter what degree she got, women 
+                still get paid much less than men, and it is harder for us to get jobs, anyways..." This made me furious. How can my mom, an owner of 6 
+                degrees herself, say something like that. So we got to arguing, and I subsequently looked up a bunch of information on how women are paid 
+                in comparison to men, explicitly in California. I found that women seem to enjoy relative equality in tech industries when it comes to pay, 
+                but not when it comes to representation. This got me thinking: Is this the reason women are paid less? Are there not enough women in high-paying
+                industries to the point that the wage ratio is significantly biased? These questions are attempted to be answered on this page.
+        </p>
+              <a href="#vis1" class="page-scroll btn btn-primary btn-xl">Let's take a look</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="content" id = "vis1">
+      <iframe src="map/map.html" class="center" scrolling="no" height="700"></iframe>
+      <p style= "color:black; font-size:10px;"> Source: American Community Survey, Census Bureau -- https://nwlc.org/resources/wage-gap-state-women-overall-2015/</p>
+
+    </section>
+  
+  <section class="no-padding content">
+
+        <p style="color:black; font-size:14px;"> 
+          So, it looks like here we can pick out some problem areas in the United States. States like Wyoming, Louisiana, Utah, 
+          and more seem to be worse off than most other states. New York, Calfornia, and Delaware seem to be ahead of the game in 
+          closing the gender wage gap. What seems to be happening is that the states on either coast seem to be more forward on the
+          issue, while the states in the center don't seem to care much. Some of these states are well below the average of 20 years 
+          ago. Moreover, I've found that states witha higher tech population seem to have a smaller wage gap, while states with lower 
+          tech populations seem to have a larger wage gap.
+        </p>
+          <center><h2>Okay, so are women ever paid equally?</h2></center>
+         <center> <a href="#vis2" class="page-scroll btn btn-primary btn-xl">Let's take a look</a></center>
+      </section>
+  <section class="content" id = "vis2">
+      <iframe src="scatterE/scat.html" class="center" scrolling="no" height="638"></iframe>
+      <p style= "color:black; font-size:10px;"> Source: U.S. Government, Bureau of Labor Statistics -- https://www.bls.gov/cps/cpsaat39.htm</p>
+
+    </section>
+  
+  <section class="no-padding content">
+
+        <p style="color:black; font-size:14px;"> I've always known that women get paid less than men, but to what extent, I was unsure. The data 
+          displayed in this scatter plot is of 119 different occupations. I isolated these particular occupations because they were the only 
+          occupations that had no null values for men, women, or men and women combined. The data set sets a null value for the average weekly 
+          income in the event that that particular gender has less than 50,000 persons occupying the particular occupation. Once those rows were 
+          removed, I added an extra row that calculated the ratio of women to men pay. If the ratio was below .95, the row was given a 1 value; 
+          if it was greater than .95 and less than 1.05, it was given a value of 2, and if it was greater than 1.05, it was given a value of 0.
+          A zero value (women are paid higher than men) is extremely difficult to come by, as you should be able to see above. In ONLY TEN 
+          occupations do women enjoy income equality, and even more scarcely, in ONLY TWO occupations do women enjoy a noticable difference in pay
+           over their male counterparts. That leaves a whopping 106 occupations where men are paid noticably higher than their female counterparts.<br>
+       So yes, but really, no... Women are very rarely paid equally, and even more scarcely are they paid higher than men.
+    </p>
+    <center><h1>So why exactly are women paid less than men?</h1></center>
+    <center><a href="#vis3" class="page-scroll btn btn-primary btn-xl">Let's take a look</a></center>
+      </section>
+  
+    <section class="content" id = "vis3">
+      <iframe src="sankey/sankey.html" class="center" scrolling="no" height="638"></iframe>
+      <p style= "color:black; font-size:10px;"> Source: U.S. Government, Bureau of Labor Statistics -- https://www.bls.gov/cps/cpsaat39.htm</p>
+      <p style= "color:black; font-size:10px;"> Visual Inspiration: Harry Stevens' "Sankey from CSV" -- https://bl.ocks.org/HarryStevens/0a437a96e9a2aa2408adbd32b1853cc3</p>
+
+    </section>
+  
+  <section class="no-padding content">
+
+        <p style="color:black; font-size:14px;"> 
+          Upon looking at this data thoroughly, you can find out a few things: <br>1) Women are the majority in the bottom 20 paying jobs. <br>2) Men are the majority 
+          in the top 20 paying jobs, and <br>3)Specifically looking at engineering fields in the sankey diagram, men are the OVERWHELMING majority.<br>
+          This is obviously problematic. It seems clear to me that, although there are numerous factors playing into the wage gap, women need to start getting into the 
+          engineering fields if they want to start making a dent in the wage gap. As students at the University of San Francisco, it is exciting that we are above the 
+          average with respect to women in the CS Major, but it is also disheartening at how low that average is, to begin with. 
+        </p>
+    <p></p>
+
+      </section>
+  
+  <div class="jumbotron text-center" id="team">
+      <h1>About Me</h1>
+    </div>
+    <section class="no-padding content">
+      <div class="bio-pics">
+          <img class="img-circle active" src="img/selfie.jpeg" data="Mohamed">
+        </div>
+  <div class="bio-content">
+    <div data="Mohamed" class="active">
+      <h3>Mohamed</h3>
+              <p>
+                Hi everyone! My name is Mohamed! I am currently a senior studying Computer Science at the University of San Francisco. 
+                My expected graduation date is December, 2017 (I cannot wait!)! I am a Bay Area native (South Bay). I am an aspiring backend 
+                software engineer, lover of soccer, and a huge music fan!
+               </p> 
+            <p>Want to get in touch? Contact me by email, LinkedIn, or GitHub. 
+              </p>
+            
+            <div class="row">
+                    <div class="col-lg-4  col-lg-offset-4 text-center">
+                      <a href="https://www.linkedin.com/in/mohamed-elafifi-986831aa/" target="_blank">
+                        <img src = "img/linkedin-icon.svg" style = "width:40px; height:40px;">
+                      </a>
+                      <a href="https://www.github.com/maelafifi" target="_blank">
+                        <img src = "img/gitIcon.png" style = "width:40px; height:40px;">
+                      </a>
+                      <a href="mailto:mohamedaoe@gmail.com" target="_blank">
+                        <img src = "img/mail.png" style = "width:40px; height:40px;">
+                      </a>
+                    </div>
+
+              </div>
+          </div>
+      </div>
+     </section>
+  
+  <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrollreveal.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+    <!-- My JavaScript -->
+    <script type="text/javascript" src="js/bios.js"></script>
+
+  </body>
+</html>
